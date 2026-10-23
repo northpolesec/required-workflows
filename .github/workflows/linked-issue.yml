@@ -1,4 +1,4 @@
-name: linked-issue
+name: Linked Issue Requirement
 on:
   pull_request:
   merge_group:
