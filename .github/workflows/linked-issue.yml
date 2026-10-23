@@ -1,0 +1,35 @@
+name: linked-issue
+on:
+  pull_request:
+  merge_group:
+concurrency:
+  group: linked-issue-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  linked-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          repository: northpolesec/required-workflows
+          sparse-checkout: .github/scripts
+          path: central
+          persist-credentials: false
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          script: |
+            if (context.eventName === 'merge_group') return;
+            // A rerun reuses the old event payload, so read the current PR.
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+            if (pr.user.login === 'dependabot[bot]') return;
+            const { hasLinearKey } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
+            if (!hasLinearKey(pr.title, pr.body, pr.head.ref)) {
+              core.setFailed('Add a Linear issue key, for example ABC-123, to the PR title, body, or branch name.');
+            }
