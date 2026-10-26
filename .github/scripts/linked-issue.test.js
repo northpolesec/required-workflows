@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const { hasLinearKey } = require('./linked-issue.js');
+const { hasLinearKey, isBot } = require('./linked-issue.js');
 
 assert.ok(hasLinearKey('Fix login', '', 'user/abc-42'), 'lowercase branch key');
 assert.ok(hasLinearKey('Fix login', 'Fixes ABC-123', 'user/fix-login'), 'key in body');
@@ -8,4 +8,7 @@ assert.ok(!hasLinearKey('Fix login', null, 'user/fix-login'), 'empty body, no ke
 for (const s of ['UTF-8', 'ISO-8601', 'CVE-2024-1234', 'RFC-9110', 'TLS-1']) {
   assert.ok(!hasLinearKey(s, '', 'main'), `${s} is not a key`);
 }
+assert.ok(isBot({ login: 'dependabot[bot]', type: 'Bot' }), 'Dependabot is a bot');
+assert.ok(isBot({ login: 'nps-schema-doc-generator[bot]', type: 'Bot' }), 'app bot');
+assert.ok(!isBot({ login: 'someone', type: 'User' }), 'a person is not a bot');
 console.log('ok');

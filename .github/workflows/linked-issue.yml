@@ -28,8 +28,8 @@ jobs:
               ...context.repo,
               pull_number: context.payload.pull_request.number,
             });
-            if (pr.user.login === 'dependabot[bot]') return;
-            const { hasLinearKey } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
+            const { hasLinearKey, isBot } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
+            if (isBot(pr.user)) return;
             if (!hasLinearKey(pr.title, pr.body, pr.head.ref)) {
               core.setFailed('Add a Linear issue key, for example ABC-123, to the PR title, body, or branch name.');
             }
