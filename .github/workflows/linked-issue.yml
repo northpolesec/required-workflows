@@ -1,4 +1,4 @@
-name: linked-issue
+name: Linked Issue Requirement
 on:
   pull_request:
   merge_group:
@@ -31,5 +31,5 @@ jobs:
             const { hasLinearKey, isBot } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
             if (isBot(pr.user)) return;
             if (!hasLinearKey(pr.title, pr.body, pr.head.ref)) {
-              core.setFailed('Add a Linear issue key, for example ABC-123, to the PR title, body, or branch name.');
+              core.setFailed('Add a Linear issue key to the PR title, body, or branch name.');
             }
