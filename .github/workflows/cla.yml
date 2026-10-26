@@ -1,0 +1,23 @@
+name: cla
+on:
+  issue_comment:
+    types: [created]
+  # Fork PRs need the base repo context to read the App secret. Safe because the PR code is never checked out.
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  merge_group:
+jobs:
+  cla:
+    if: github.event_name != 'issue_comment' || github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+      statuses: write
+    steps:
+      # A merge group has no pull request, so the job passes without running the check.
+      - if: github.event_name != 'merge_group'
+        uses: northpolesec/cla/.github/actions/cla@b1b3a870365a1622d80914793e41f098734f8883
+        with:
+          app-id: ${{ secrets.CLA_APP_ID }}
+          private-key: ${{ secrets.CLA_APP_KEY }}
