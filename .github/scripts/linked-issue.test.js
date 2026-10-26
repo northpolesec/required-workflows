@@ -15,5 +15,8 @@ assert.equal(noIssueReason('No-Issue:'), null, 'empty reason');
 assert.equal(noIssueReason('No-Issue:   \nnext line'), null, 'blank reason does not span lines');
 assert.equal(noIssueReason('See No-Issue: below'), null, 'must start a line');
 assert.equal(noIssueReason('<!-- No-Issue: reason -->'), null, 'template comment');
+assert.equal(noIssueReason('<!--\nNo-Issue: reason\n-->'), null, 'multiline template comment');
+assert.equal(noIssueReason('<!--\nNo-Issue: reason'), null, 'unclosed template comment');
+assert.equal(noIssueReason('<!-- hint -->\nNo-Issue: real reason'), 'real reason', 'reason after a comment');
 assert.equal(noIssueReason(null), null, 'null body');
 console.log('ok');
