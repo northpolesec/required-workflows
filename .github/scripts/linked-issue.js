@@ -7,4 +7,10 @@ function hasLinearKey(title, body, branch) {
   return KEY.test([title, body, branch].join('\n'));
 }
 
-module.exports = { hasLinearKey };
+// GitHub App bots (Dependabot, schema generators) open PRs with no issue.
+// Only org admins can install apps, so a person cannot use this to skip.
+function isBot(user) {
+  return user.type === 'Bot';
+}
+
+module.exports = { hasLinearKey, isBot };
