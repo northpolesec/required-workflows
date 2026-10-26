@@ -8,7 +8,9 @@ The `linked-issue` check fails when a pull request has no Linear issue key. A ke
 
 The check does not count common tokens such as `SHA-256`, `UTF-8`, and `CVE-2024-1234` as keys. Pull requests from Dependabot pass.
 
-If the check fails, add the key to the title or the body. Then push a commit or run the check again. GitHub does not run the check again when you only edit the title or the body.
+If a pull request has no issue, add a line to the body that starts with `No-Issue:` and gives the reason, for example `No-Issue: fix a typo in the README`. The check passes and shows the reason as a notice. A `No-Issue:` line with no reason does not count.
+
+If the check fails, add the key to the title or the body, or add a `No-Issue:` line to the body. Then push a commit or run the check again. GitHub does not run the check again when you only edit the title or the body.
 
 ## Test
 
