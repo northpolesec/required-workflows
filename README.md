@@ -2,11 +2,11 @@
 
 Workflows that GitHub runs on pull requests in every North Pole Security repository. An organization ruleset makes each workflow a required check.
 
-## linked-issue
+## Linked Issue Requirement
 
-The `linked-issue` check fails when a pull request has no Linear issue key. A key is 2 to 5 letters, a dash, and a number, for example `ABC-123`. The check looks in the pull request title, the body, and the branch name. It ignores case.
+The `linked-issue` check fails when a pull request has no Linear issue key, for example `WS-123`. The check looks in the pull request title, the body, and the branch name. It ignores case.
 
-The check does not count common tokens such as `SHA-256`, `UTF-8`, and `CVE-2024-1234` as keys. Pull requests from Dependabot pass.
+Pull requests from GitHub App bots, such as Dependabot, pass.
 
 If a pull request has no issue, add a line to the body that starts with `No-Issue:` and gives the reason, for example `No-Issue: fix a typo in the README`. The check passes and shows the reason as a notice. A `No-Issue:` line with no reason does not count.
 

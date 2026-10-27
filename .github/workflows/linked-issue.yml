@@ -1,4 +1,4 @@
-name: linked-issue
+name: Linked Issue Requirement
 on:
   pull_request:
   merge_group:
@@ -28,12 +28,12 @@ jobs:
               ...context.repo,
               pull_number: context.payload.pull_request.number,
             });
-            if (pr.user.login === 'dependabot[bot]') return;
-            const { hasLinearKey, noIssueReason } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
+            const { hasLinearKey, isBot, noIssueReason } = require(`${process.env.GITHUB_WORKSPACE}/central/.github/scripts/linked-issue.js`);
+            if (isBot(pr.user)) return;
             if (hasLinearKey(pr.title, pr.body, pr.head.ref)) return;
             const reason = noIssueReason(pr.body);
             if (reason) {
               core.notice(`No linked issue: ${reason}`);
               return;
             }
-            core.setFailed('Add a Linear issue key, for example ABC-123, to the PR title, body, or branch name. Or add a "No-Issue: <reason>" line to the body.');
+            core.setFailed('Add a Linear issue key to the PR title, body, or branch name. Or add a "No-Issue: <reason>" line to the body.');
