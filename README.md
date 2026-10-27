@@ -8,7 +8,9 @@ The `linked-issue` check fails when a pull request has no Linear issue key, for 
 
 Pull requests from GitHub App bots, such as Dependabot, pass.
 
-If the check fails, add the key to the title or the body. Then push a commit or run the check again. GitHub does not run the check again when you only edit the title or the body.
+If a pull request has no issue, add a line to the body that starts with `No-Issue:` and gives the reason, for example `No-Issue: fix a typo in the README`. The check passes and shows the reason as a notice. A `No-Issue:` line with no reason does not count.
+
+If the check fails, add the key to the title or the body, or add a `No-Issue:` line to the body. Then push a commit or run the check again. GitHub does not run the check again when you only edit the title or the body.
 
 ## Test
 
