@@ -1,6 +1,7 @@
 name: Linked Issue Requirement
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   merge_group:
 concurrency:
   group: linked-issue-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
