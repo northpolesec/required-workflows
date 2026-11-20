@@ -1,5 +1,4 @@
-// Matches the issue keys of our Linear teams, in any case. The character classes
-// hide the real keys because this repo is public, so do not spell them out.
+// Matches the issue keys of our Linear teams, in any case.
 const KEY = /\b(?:[KW][MPS]|[FINRSZ][AELMNP][FLQRSTWX]|[QR][ST][CG][HK])-\d+\b/i;
 
 // A body line such as "No-Issue: typo fix" explains why the PR has no issue.
