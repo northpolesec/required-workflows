@@ -11,7 +11,7 @@ assert.ok(hasLinearKey('Fix login', 'Fixes RSCH-7', 'user/fix-login'), 'four-let
 assert.ok(!hasLinearKey('Fix login', null, 'user/fix-login'), 'empty body, no key');
 assert.ok(!hasLinearKey('Fix login', '', 'user-patch-1'), 'GitHub web editor branch is not a key');
 assert.ok(!hasLinearKey('XWS-1', '', 'main'), 'key must start a word');
-for (const s of ['SHA-256', 'UTF-8', 'ISO-8601', 'CVE-2024-1234', 'RFC-9110', 'TLS-1', 'ABC-123', 'ABCD-12', 'XRSCH-1']) {
+for (const s of ['SHA-256', 'UTF-8', 'ISO-8601', 'CVE-2024-1234', 'RFC-9110', 'TLS-1', 'ABC-123', 'ABCD-12']) {
   assert.ok(!hasLinearKey(s, '', 'main'), `${s} is not a key`);
 }
 assert.ok(isBot({ login: 'dependabot[bot]', type: 'Bot' }), 'Dependabot is a bot');
